@@ -26,6 +26,14 @@ with this program; if not, write to the Free Software Foundation, Inc.,
   #define INJECTOR_API __declspec(dllimport)
 #endif
 
+/* Vorbis file callbacks structure */
+typedef struct {
+  void *read_func;
+  void *seek_func;
+  void *close_func;
+  void *tell_func;
+} ov_callbacks;
+
 
 /* Use C interface in C++ */
 #ifdef __cplusplus
@@ -60,11 +68,61 @@ INJECTOR_API void Imm_PlayEffect(const char *);
 INJECTOR_API void Imm_StopEffect(const char *);
 INJECTOR_API void Imm_ChangeGain(const float);
 
+
 /* e3_API *InitExploration3D(e3_INIT *) */
 INJECTOR_API void *InitExploration3D(void *);
 
+
+INJECTOR_API void alInitLibrary(void);
+INJECTOR_API void alEndLibrary(void);
+
+/* ALhandle alOpenInputFile(const char *) */
+INJECTOR_API int alOpenInputFile(const char *);
+
+/* ALhandle alOpenDecoder(ALhandle) */
+INJECTOR_API int alOpenDecoder(int hFile);
+
+/* ALhandle alOpenSubFile(ALhandle, ALsize, ALsize) */
+INJECTOR_API int alOpenSubFile(int hFile, int sOffset, int sSize);
+
+/* ALbool alGetMPXHeader(ALhandle, ALsint32 *, ALsint32 *, ALsint32 *, ALbool *, ALsint32 *) */
+INJECTOR_API int alGetMPXHeader(int hFile, int *, int *, int *, int *, int *);
+
+/* void alClose(ALhandle) */
+INJECTOR_API void alClose(int);
+
+/* ALsize alRead(ALhandle, void *, ALsize) */
+INJECTOR_API int alRead(int, void *, int);
+
+/* void alDecSeekAbs(ALhandle, ALfloat) */
+INJECTOR_API void alDecSeekAbs(int, float);
+
+/* ALfloat alDecGetLen(ALhandle) */
+INJECTOR_API float alDecGetLen(int);
+
+
+/* int ov_clear(OggVorbis_File *) */
+INJECTOR_API int ov_clear(void *);
+
+/* int ov_open(FILE *, OggVorbis_File *, char *, long) */
+INJECTOR_API int ov_open(void *f, void *, char *, long);
+
+/* int ov_open_callbacks(void *, OggVorbis_File *, char *, long, ov_callbacks) */
+INJECTOR_API int ov_open_callbacks(void *, void *, char *, long, ov_callbacks);
+
+/* long ov_read(OggVorbis_File *, char *, int, int, int, int, int *) */
+INJECTOR_API long ov_read(void *, char *, int, int, int, int, int *);
+
+/* vorbis_info *ov_info(OggVorbis_File *, int) */
+INJECTOR_API void *ov_info(void *, int);
+
+/* int ov_time_seek(OggVorbis_File *, double) */
+INJECTOR_API int ov_time_seek(void *, double);
+
+
 /* CGame *GAME_Create(void) */
 INJECTOR_API void *GAME_Create(void);
+
 
 /* GameGUI_interface *GAMEGUI_Create(void) */
 INJECTOR_API void *GAMEGUI_Create(void);

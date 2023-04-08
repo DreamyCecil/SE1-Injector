@@ -5,6 +5,8 @@ This is a simple library that can inject its own code into games on Serious Engi
 ### Supported injections
 - `ImmWrapper.dll` - Obsolete IFeel support
 - `eview3d.dll` - Exploration 3D module
+- `amp11lib.dll` - MP3 playback support
+- `vorbisfile.dll`/`libvorbisfile.dll` - OGG playback support
 - `Game.dll`/`GameMP.dll` - Main Game module
 - `GameGUI.dll`/`GameGUIMP.dll` - Extra GUI module
 
