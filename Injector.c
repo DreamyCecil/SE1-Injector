@@ -42,107 +42,88 @@ static void *GetSymbol(const char *strSymbolName)
   return INJECTOR_NULL;
 };
 
-/* Define methods per injector type */
-#if SE1_INJECTOR_TYPE == SE1_INJECTOR_IFEEL
 
 /* Hook original methods */
-static void *_pCreate;
-static void *_pDelete;
-static void *_pName;
-static void *_pLoad;
-static void *_pUnload;
-static void *_pPlay;
-static void *_pStop;
-static void *_pGain;
+static void *IFeel_pCreate;
+static void *IFeel_pDelete;
+static void *IFeel_pName;
+static void *IFeel_pLoad;
+static void *IFeel_pUnload;
+static void *IFeel_pPlay;
+static void *IFeel_pStop;
+static void *IFeel_pGain;
+static void *Exp3D_pInit;
+static void *Game_pCreate;
+static void *GameGUI_pCreate;
 
 void INJ_HookOriginalMethods(void) {
-  _pCreate = GetSymbol("Imm_CreateDevice");
-  _pDelete = GetSymbol("Imm_DeleteDevice");
-  _pName   = GetSymbol("Imm_GetProductName");
-  _pLoad   = GetSymbol("Imm_LoadFile");
-  _pUnload = GetSymbol("Imm_UnLoadFile"); /* "immUnloadFile" in SE1 */
-  _pPlay   = GetSymbol("Imm_PlayEffect");
-  _pStop   = GetSymbol("Imm_StopEffect");
-  _pGain   = GetSymbol("Imm_ChangeGain");
+  IFeel_pCreate = GetSymbol("Imm_CreateDevice");
+  IFeel_pDelete = GetSymbol("Imm_DeleteDevice");
+  IFeel_pName   = GetSymbol("Imm_GetProductName");
+  IFeel_pLoad   = GetSymbol("Imm_LoadFile");
+  IFeel_pUnload = GetSymbol("Imm_UnLoadFile"); /* "immUnloadFile" in SE1 */
+  IFeel_pPlay   = GetSymbol("Imm_PlayEffect");
+  IFeel_pStop   = GetSymbol("Imm_StopEffect");
+  IFeel_pGain   = GetSymbol("Imm_ChangeGain");
+
+  Exp3D_pInit = GetSymbol("InitExploration3D");
+
+  Game_pCreate = GetSymbol("GAME_Create");
+
+  GameGUI_pCreate = GetSymbol("GAMEGUI_Create");
 };
 
-/* Injector methods */
+
+/* Define methods per library */
+
+/* IFeel methods */
 int Imm_CreateDevice(void *hInstance, void *hWnd) {
-  return ((int (*)(void *, void *))_pCreate)(hInstance, hWnd);
+  return ((int (*)(void *, void *))IFeel_pCreate)(hInstance, hWnd);
 };
 
 void Imm_DeleteDevice(void) {
-  ((void (*)(void))_pDelete)();
+  ((void (*)(void))IFeel_pDelete)();
 };
 
 int Imm_GetProductName(char *strProduct, int iMaxCount) {
-  return ((int (*)(char *, int))_pName)(strProduct, iMaxCount);
+  return ((int (*)(char *, int))IFeel_pName)(strProduct, iMaxCount);
 };
 
 int Imm_LoadFile(const char *fnFile) {
-  return ((int (*)(const char *))_pLoad)(fnFile);
+  return ((int (*)(const char *))IFeel_pLoad)(fnFile);
 };
 
 void Imm_UnLoadFile(void) {
-  ((void (*)(void))_pUnload)();
+  ((void (*)(void))IFeel_pUnload)();
 };
 
 void immUnloadFile(void) {
-  ((void (*)(void))_pUnload)();
+  ((void (*)(void))IFeel_pUnload)();
 };
 
 void Imm_PlayEffect(const char *pstrEffectName) {
-  ((void (*)(const char *))_pPlay)(pstrEffectName);
+  ((void (*)(const char *))IFeel_pPlay)(pstrEffectName);
 };
 
 void Imm_StopEffect(const char *pstrEffectName) {
-  ((void (*)(const char *))_pStop)(pstrEffectName);
+  ((void (*)(const char *))IFeel_pStop)(pstrEffectName);
 };
 
 void Imm_ChangeGain(const float fGain) {
-  ((void (*)(const float))_pGain)(fGain);
+  ((void (*)(const float))IFeel_pGain)(fGain);
 };
 
-#elif SE1_INJECTOR_TYPE == SE1_INJECTOR_EXP3D
-
-/* Hook original methods */
-static void *_pInit;
-
-void INJ_HookOriginalMethods(void) {
-  _pInit = GetSymbol("InitExploration3D");
-};
-
-/* Injector methods */
+/* Exploration 3D methods */
 void *InitExploration3D(void *pInitStruct) {
-  return ((void *(*)(void *))_pInit)(pInitStruct);
+  return ((void *(*)(void *))Exp3D_pInit)(pInitStruct);
 };
 
-#elif SE1_INJECTOR_TYPE == SE1_INJECTOR_GAME
-
-/* Hook original methods */
-static void *_pCreate;
-
-void INJ_HookOriginalMethods(void) {
-  _pCreate = GetSymbol("GAME_Create");
-};
-
-/* Injector methods */
+/* Game methods */
 void *GAME_Create(void) {
-  return ((void *(*)(void))_pCreate)();
+  return ((void *(*)(void))Game_pCreate)();
 };
 
-#elif SE1_INJECTOR_TYPE == SE1_INJECTOR_GAMEGUI
-
-/* Hook original methods */
-static void *_pCreate;
-
-void INJ_HookOriginalMethods(void) {
-  _pCreate = GetSymbol("GAMEGUI_Create");
-};
-
-/* Injector methods */
+/* GameGUI methods */
 void *GAMEGUI_Create(void) {
-  return ((void *(*)(void))_pCreate)();
+  return ((void *(*)(void))GameGUI_pCreate)();
 };
-
-#endif /* SE1_INJECTOR_TYPE checks */

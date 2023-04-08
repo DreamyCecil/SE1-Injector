@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Injector.h" />
-    <ClInclude Include="InjectorTypes.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1F46FD81-1A15-7E2C-7C68-84AB43BC0B05}</ProjectGuid>

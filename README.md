@@ -19,22 +19,13 @@ This injector also exports its own custom symbols that you may utilize:
 - `void INJ_HookOriginalMethods(void)` - Method for "rehooking" methods from the library. Needs to be called after loading a new one.
 
 ### File structure
-- `Injector.c` - Main injector code. Defines methods for the selected module that call original methods.
+- `Injector.c` - Main injector code. Defines methods that call original methods.
 - `Injector.h` - Main injector interface. Can be used for linking the injector library.
-- `InjectorTypes.h` - Defines types of supported injections.
 - `Main.c` - Defines injector's entry point and hooks original methods upon loading the injector library.
 
 ## Building
 
 This project is written in ANSI C using **Visual Studio 2010** but can be compiled virtually by any C compiler.
-
-By default, the injector is setup to compile for the IFeel module but that can be changed by redefining the `SE1_INJECTOR_TYPE` macro with one of the supported types:
-```cpp
-#define SE1_INJECTOR_IFEEL   0 /* IFeel (ImmWrapper.dll) */
-#define SE1_INJECTOR_EXP3D   1 /* Exploration 3D (eview3d.dll) */
-#define SE1_INJECTOR_GAME    2 /* Game library (Game.dll / GameMP.dll) */
-#define SE1_INJECTOR_GAMEGUI 3 /* GameGUI library (GameGUI.dll / GameGUIMP.dll) */
-```
 
 ### Notes
 - Don't forget to specify the path to the original library in the `INJ_strOriginalLib` variable that's defined in `Injector.c`. It can either be absolute or relative to the executable that loaded the injector.
