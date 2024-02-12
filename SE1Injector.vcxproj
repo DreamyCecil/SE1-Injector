@@ -7,7 +7,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Injector.c" />
+    <ClCompile Include="Injector.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Main.c" />
   </ItemGroup>
   <ItemGroup>
@@ -36,9 +38,7 @@
     <ClCompile />
     <Link />
     <PreBuildEvent />
-    <ClCompile>
-      <PreprocessorDefinitions>SE1_INJECTOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
+    <ClCompile />
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

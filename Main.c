@@ -13,10 +13,10 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. */
 
-#include "Injector.h"
+/* NOTE: This source file is for compiling the working library as a whole */
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+/* Compile injector inline */
+#include "Injector.c"
 
 /* Library entry point */
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD ulReason, LPVOID pReserved) {

@@ -29,10 +29,15 @@ This injector also exports its own custom symbols that you may utilize:
 
 This project is written in ANSI C using **Visual Studio 2010** but can be compiled virtually by any C compiler.
 
+Batch script for building using **MSVC**:
+```bat
+cl.exe Main.c /LD /DINJECTOR_LIB_PATH="\"GameMP.dll\""
+```
+
 ### Notes
-- Don't forget to specify the path to the original library in the `INJ_strOriginalLib` variable that's defined in `Injector.c`. It can either be absolute or relative to the executable that loaded the injector.
-- If you're building the injector itself, don't forget to define the `SE1_INJECTOR_EXPORTS` macro in project settings to make it export all the necessary symbols.
-- If you're just linking the injector instead, you need to include the `Injector.h` file and link the static library.
+- Don't forget to specify the path to the original library in the `INJ_strOriginalLib` variable using the `INJECTOR_LIB_PATH` macro. It can either be absolute or relative to the executable that loaded the injector.
+- If you wish to build the entire working library, you can simply compile `Main.c` source file, since it includes `Injector.c` inline.
+- If you wish to just link the injector instead, you need to include the `Injector.h` file and link the static library manually.
 
 ## License
 

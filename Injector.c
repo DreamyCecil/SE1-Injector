@@ -13,12 +13,20 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. */
 
+/* NOTE: This source file is for compiling the injector itself */
+
+#define SE1_INJECTOR_EXPORTS
 #include "Injector.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-char INJ_strOriginalLib[256] = "< please specify path to the original library >";
+/* Specify path to the original library using this macro */
+#ifndef INJECTOR_LIB_PATH
+  #define INJECTOR_LIB_PATH "< please specify path to the original library >"
+#endif
+
+char INJ_strOriginalLib[256] = INJECTOR_LIB_PATH;
 
 /* Original library handle */
 static HINSTANCE _hLibrary = INJECTOR_NULL;
